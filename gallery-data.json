@@ -1,0 +1,8 @@
+{
+  "images": [
+    { "filename": "photo1.jpg", "caption": "Stage Magic" },
+    { "filename": "photo2.jpg", "caption": "Close up Illusion" },
+    { "filename": "photo3.jpg", "caption": "Mentalism Session" },
+    { "filename": "photo4.jpg", "caption": "Crowd Reaction" }
+  ]
+}
