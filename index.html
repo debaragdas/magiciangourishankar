@@ -3,154 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-site-verification" content="UQy3XPbqlw44A56QxnDIBJZFpkmtxM-rvlCuP8vNLF8" />
-    <title>GOURI SHANKAR DAS | Hypno-Mentalist & Illusionist</title>
-    
+    <title>GOURI SHANKAR DAS | Hypno-Mentalist</title>
+
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
-        body { font-family: 'Inter', sans-serif; background: #08080c; color: #e2e8f0; overflow-x: hidden; margin: 0; }
-        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #08080c;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
         /* Navigation */
-        nav { background: rgba(8, 8, 12, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .nav-link { 
-            font-size: 0.8rem; 
-            letter-spacing: 0.1em; 
-            text-transform: uppercase; 
-            font-weight: 700; 
-            color: #fff; 
-            padding: 12px 16px; 
-            border-radius: 8px; 
-            transition: 0.3s; 
-            background: rgba(255,255,255,0.05);
+        nav {
+            background: rgba(8, 8, 12, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
-        .nav-link:hover { background: #a855f7; }
 
-        /* Hero Animation */
-        @keyframes slowZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        .bg-animate { animation: slowZoom 25s infinite ease-in-out; transform-origin: center 15%; }
-        
-        .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
-        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .nav-link {
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
 
-        /* Grid Item Styling */
-        .img-card { 
-            width: 100%; 
+        .nav-link:hover {
+            background: #a855f7;
+        }
+
+        /* Scroll animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Image cards */
+        .img-card {
+            width: 100%;
             aspect-ratio: 3/4;
-            overflow: hidden; 
-            border-radius: 12px; 
+            overflow: hidden;
+            border-radius: 12px;
             background: #111;
-            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        #video-grid { display: grid; grid-template-cols: 1fr; gap: 20px; min-height: 400px; }
-        @media (min-width: 768px) { #video-grid { grid-template-cols: repeat(3, 1fr); } }
+        /* Video Grid FIXED */
+        #video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
 
-        /* Share Grid */
-        .share-grid { display: grid; grid-template-cols: repeat(2, 1fr); gap: 12px; max-width: 500px; margin: 0 auto; }
-        @media (min-width: 640px) { .share-grid { grid-template-cols: repeat(4, 1fr); } }
-        
-        .btn-share { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; border-radius: 16px; transition: 0.3s; font-size: 0.7rem; font-weight: 700; color: white; text-transform: uppercase; }
-        .bg-whatsapp { background-color: #25D366; }
-        .bg-facebook { background-color: #1877F2; }
-        .bg-twitter { background-color: #1DA1F2; }
-        .bg-instagram { background: linear-gradient(45deg, #f09433 0%, #dc2743 50%, #bc1888 100%); }
+        @media (min-width: 768px) {
+            #video-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
 
-        #image-modal.active { display: flex; }
+        #image-modal.active {
+            display: flex;
+        }
     </style>
 </head>
+
 <body class="min-h-screen">
 
-    <nav class="fixed top-0 left-0 right-0 z-[100] py-3 shadow-2xl">
-        <div class="max-w-6xl mx-auto px-4 flex justify-center gap-3 md:gap-6 overflow-x-auto whitespace-nowrap">
-            <a href="#about" class="nav-link">About</a>
-            <a href="#performances" class="nav-link">Reels</a>
-            <a href="#persona-gallery" class="nav-link">Persona</a>
-            <a href="#public-gallery" class="nav-link">Gallery</a>
-            <a href="#contact" class="nav-link">Contact</a>
-        </div>
-    </nav>
-
-    <section class="relative h-[55vh] md:h-screen flex items-center justify-center overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="images/background.png" class="w-full h-full object-cover opacity-40 bg-animate" style="object-position: center 15%;">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-[#08080c]"></div>
-        </div>
-        <div class="relative z-10 text-center px-4 mt-20">
-            <h1 class="text-4xl md:text-8xl font-bold mb-2 tracking-tighter uppercase text-white">GOURI SHANKAR DAS</h1>
-            <p class="text-[10px] md:text-2xl text-purple-400 font-light tracking-[0.5em] uppercase">Hypno-Mentalist • Illusionist</p>
-        </div>
-    </section>
-
-    <section id="about" class="py-12 md:py-24 px-4 max-w-5xl mx-auto animate-on-scroll">
-        <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-            <div class="w-52 h-52 md:w-80 md:h-80 flex-shrink-0">
-                <img src="images/profile.png" alt="Gouri Shankar Das" class="w-full h-full object-cover rounded-3xl border-2 border-purple-500/20 shadow-2xl">
-            </div>
-            <div class="bg-white/5 backdrop-blur-xl p-8 md:p-12 rounded-[2.5rem] border border-white/10">
-                <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white uppercase tracking-widest border-b-2 border-purple-500 pb-2 w-fit">The Mind Behind The Magic</h2>
-                <p class="text-gray-300 text-base md:text-lg leading-relaxed">
-                    Gouri Shankar Das is a seasoned <strong>Hypno-Mentalist</strong> with over 12 years of performance experience. His work focuses on high-impact psychological wonder and the extraordinary capabilities of the human mind.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="performances" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-white uppercase tracking-[0.3em]">Performance Reels</h2>
-            <div class="h-1 w-20 bg-purple-600 mx-auto mt-4"></div>
-        </div>
-        <div id="video-grid"></div>
-    </section>
-
-    <section id="persona-gallery" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
-        <h2 class="text-center text-3xl font-bold text-white uppercase tracking-[0.3em] mb-12">The Artist's Persona</h2>
-        <div id="persona-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"></div>
-    </section>
-
-    <section id="public-gallery" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
-        <h2 class="text-center text-3xl font-bold text-white uppercase tracking-[0.3em] mb-12">Public Appearance</h2>
-        <div id="public-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4"></div>
-    </section>
-
-    <footer id="contact" class="py-24 px-4 bg-black/95 text-center border-t border-white/5">
-        <div class="mb-14 space-y-4">
-            <h3 class="text-gray-500 uppercase tracking-widest text-xs mb-2">Bookings & Inquiries</h3>
-            <a href="tel:+918011939996" class="text-2xl md:text-3xl text-purple-400 font-bold block">+91 80119-39996</a>
-            <a href="mailto:mentalistshankar22@gmail.com" class="text-base md:text-lg text-purple-400 block">mentalistshankar22@gmail.com</a>
-        </div>
-
-        <div class="share-grid mb-16">
-            <button onclick="shareNow('whatsapp')" class="btn-share bg-whatsapp">WhatsApp</button>
-            <button onclick="shareNow('facebook')" class="btn-share bg-facebook">Facebook</button>
-            <button onclick="shareNow('twitter')" class="btn-share bg-twitter">Twitter</button>
-            <a href="https://www.instagram.com/mentalist_g.shankar" target="_blank" class="btn-share bg-instagram">Instagram</a>
-        </div>
-        
-        <p class="text-gray-800 text-[10px] tracking-[0.6em] uppercase">© 2026 GOURI SHANKAR DAS</p>
-    </footer>
-
-    <div id="image-modal" class="fixed inset-0 z-[200] bg-black/98 hidden items-center justify-center p-4">
-        <button id="close-modal" class="absolute top-6 right-6 text-white text-5xl">&times;</button>
-        <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl">
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 right-0 z-50 py-3">
+    <div class="flex justify-center gap-4">
+        <a href="#performances" class="nav-link">Reels</a>
+        <a href="#persona-gallery" class="nav-link">Persona</a>
+        <a href="#public-gallery" class="nav-link">Gallery</a>
     </div>
+</nav>
 
-    <script src="script.js"></script>
-    <script async src="//www.instagram.com/embed.js"></script>
-    <script>
-        function shareNow(platform) {
-            const url = window.location.href;
-            const text = "Discover the magic of Gouri Shankar Das: ";
-            let link = "";
-            if(platform === 'whatsapp') link = `https://api.whatsapp.com/send?text=${encodeURIComponent(text + url)}`;
-            else if(platform === 'facebook') link = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-            else if(platform === 'twitter') link = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-            window.open(link, '_blank');
-        }
-    </script>
+<!-- SPACING FIX -->
+<div class="h-20"></div>
+
+<!-- REELS SECTION -->
+<section id="performances" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
+    <h2 class="text-center text-3xl font-bold mb-10">Performance Reels</h2>
+
+    <div id="video-grid">
+        <p class="text-center text-gray-500 col-span-full">Loading reels...</p>
+    </div>
+</section>
+
+<!-- PERSONA -->
+<section id="persona-gallery" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
+    <h2 class="text-center text-3xl font-bold mb-10">Artist Persona</h2>
+
+    <div id="persona-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <p class="text-gray-500 col-span-full text-center">Loading images...</p>
+    </div>
+</section>
+
+<!-- PUBLIC GALLERY -->
+<section id="public-gallery" class="py-16 px-4 max-w-6xl mx-auto animate-on-scroll">
+    <h2 class="text-center text-3xl font-bold mb-10">Public Performances</h2>
+
+    <div id="public-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <p class="text-gray-500 col-span-full text-center">Loading images...</p>
+    </div>
+</section>
+
+<!-- IMAGE MODAL -->
+<div id="image-modal" class="fixed inset-0 bg-black/95 hidden items-center justify-center z-50 p-4">
+    <button id="close-modal" class="absolute top-6 right-6 text-white text-2xl">✕</button>
+    <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-xl">
+</div>
+
+<!-- SCRIPTS -->
+<script src="script.js"></script>
+
+<!-- Instagram Embed FIX -->
+<script async src="https://www.instagram.com/embed.js"></script>
+
 </body>
 </html>
