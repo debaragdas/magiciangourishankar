@@ -1,104 +1,99 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
     // 1. INITIALIZE ICONS
     if (window.lucide) {
         lucide.createIcons();
     }
 
-    // 2. LOAD GALLERY IMAGES
+    // 2. LOAD IMAGE GALLERIES
     fetch('gallery-data.json')
-    .then(res => {
-        if (!res.ok) throw new Error("Gallery JSON not found");
-        return res.json();
-    })
-    .then(data => {
-        const personaGrid = document.getElementById('persona-grid');
-        const publicGrid = document.getElementById('public-grid');
-
-        const createCard = (img) => {
-            const div = document.createElement('div');
-            div.className = 'img-card cursor-pointer';
-            div.innerHTML = `
-                <img src="${img.filename}" 
-                     class="w-full h-full object-cover"
-                     loading="lazy"
-                     onerror="this.src='https://via.placeholder.com/400x600?text=Image+Missing'">
-            `;
-            div.onclick = () => openModal(img.filename);
-            return div;
-        };
-
-        if (personaGrid && data.persona) {
-            personaGrid.innerHTML = '';
-            data.persona.forEach(i => personaGrid.appendChild(createCard(i)));
-        }
-
-        if (publicGrid && data.public) {
-            publicGrid.innerHTML = '';
-            data.public.forEach(i => publicGrid.appendChild(createCard(i)));
-        }
-    })
-    .catch(err => console.error("Gallery Error:", err));
-
-
-    // 3. LOAD INSTAGRAM REELS
-    const videoGrid = document.getElementById('video-grid');
-
-    // Try primary filename first, then fallback
-    const videoFiles = ['video-data.json', 'videos-data (1).json'];
-    
-    function loadVideos(index) {
-        if (index >= videoFiles.length) return;
-
-        fetch(videoFiles[index])
         .then(res => {
-            if (!res.ok) throw new Error("File not found");
+            if (!res.ok) throw new Error('Gallery JSON not found');
             return res.json();
         })
         .then(data => {
+            const personaGrid = document.getElementById('persona-grid');
+            const publicGrid = document.getElementById('public-grid');
+            
+            const createCard = (photo) => {
+                const div = document.createElement('div');
+                div.className = "img-card cursor-pointer group";
+                div.innerHTML = `
+                    <img src="${photo.filename}" 
+                         loading="lazy" 
+                         alt="${photo.caption}"
+                         class="w-full h-full object-cover"
+                         onerror="this.src='https://via.placeholder.com/400x600?text=Image+Missing'">
+                `;
+                div.onclick = () => openModal(photo.filename);
+                return div;
+            };
+
+            if (data.persona && personaGrid) {
+                personaGrid.innerHTML = '';
+                data.persona.forEach(p => personaGrid.appendChild(createCard(p)));
+            }
+            
+            if (data.public && publicGrid) {
+                publicGrid.innerHTML = '';
+                data.public.forEach(p => publicGrid.appendChild(createCard(p)));
+            }
+        })
+        .catch(err => console.error("Gallery Error:", err));
+
+    // 3. LOAD INSTAGRAM REELS
+    const videoGrid = document.getElementById('video-grid');
+    
+    // Check for both possible filenames
+    const videoSource = 'videos-data (1).json'; 
+
+    fetch(videoSource)
+        .then(res => res.json())
+        .then(data => {
             if (!videoGrid) return;
-            videoGrid.innerHTML = '';
+            videoGrid.innerHTML = ''; 
 
             data.reels.forEach(reel => {
-                const wrapper = document.createElement('div');
-                // Professional styling for the reel container
-                wrapper.className = "w-full flex justify-center bg-white/5 rounded-xl overflow-hidden border border-white/10";
-                wrapper.style.minHeight = "480px";
-
-                wrapper.innerHTML = `
-                    <blockquote class="instagram-media"
-                        data-instgrm-permalink="${reel.url}"
-                        data-instgrm-version="14"
-                        style="width:100%; max-width:540px; margin:0; border:0; padding:0;">
+                const div = document.createElement('div');
+                div.className = "flex justify-center min-h-[480px] w-full bg-white/5 rounded-2xl overflow-hidden border border-white/5"; 
+                div.innerHTML = `
+                    <blockquote class="instagram-media" 
+                                data-instgrm-permalink="${reel.url}" 
+                                data-instgrm-version="14" 
+                                style="width:100%; border:0; margin:0; padding:0;">
                     </blockquote>
                 `;
-                videoGrid.appendChild(wrapper);
+                videoGrid.appendChild(div);
             });
 
-            // Trigger the Instagram embed script to render the videos
-            renderInstagram();
+            // Trigger the Instagram engine
+            processInstagram();
         })
-        .catch(() => loadVideos(index + 1));
-    }
-
-    loadVideos(0);
+        .catch(err => {
+            console.error("Video Load Error:", err);
+            if(videoGrid) videoGrid.innerHTML = `<p class="text-gray-500 text-center col-span-full">Unable to load reels. Please refresh.</p>`;
+        });
 
     // 4. MODAL LOGIC
     window.openModal = function(src) {
         const modal = document.getElementById('image-modal');
-        const img = document.getElementById('modal-img');
-        if (modal && img) {
-            img.src = src;
+        const modalImg = document.getElementById('modal-img');
+        if (modal && modalImg) {
+            modalImg.src = src;
             modal.classList.remove('hidden');
         }
     };
 
+    // Close modal on click anywhere
     document.getElementById('image-modal')?.addEventListener('click', function() {
         this.classList.add('hidden');
     });
 });
 
-// INSTAGRAM RENDER ENGINE
-function renderInstagram() {
+/**
+ * Robust Instagram Embed Processor
+ * Retries for 10 seconds until the Instagram script is ready
+ */
+function processInstagram() {
     let attempts = 0;
     const interval = setInterval(() => {
         if (window.instgrm && window.instgrm.Embeds) {
@@ -106,6 +101,6 @@ function renderInstagram() {
             clearInterval(interval);
         }
         attempts++;
-        if (attempts > 30) clearInterval(interval); 
+        if (attempts > 20) clearInterval(interval); 
     }, 500);
 }
