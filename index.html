@@ -1,192 +1,148 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOURI SHANKAR DAS | Hypno-Mentalist</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOURI SHANKAR DAS | Hypno-Mentalist</title>
 
-<!-- Tailwind -->
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<style>
-body { font-family: 'Inter', sans-serif; background:#08080c; color:#e2e8f0; margin:0; }
+    <style>
+        body { font-family: 'Inter', sans-serif; background:#08080c; color:#e2e8f0; margin:0; }
 
-/* NAV */
-nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
-.nav-link { padding:10px 14px; font-size:12px; font-weight:700; text-transform:uppercase; }
-.nav-link:hover { background:#a855f7; border-radius:6px; }
+        /* NAV */
+        nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
+        .nav-link { padding:10px 14px; font-size:12px; font-weight:700; text-transform:uppercase; color: white; text-decoration: none; }
+        .nav-link:hover { background:#a855f7; border-radius:6px; }
 
-/* HERO FIXED (face visible) */
-.bg-animate { animation: zoom 25s infinite; }
-@keyframes zoom { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+        /* HERO FIXED */
+        .bg-animate { animation: zoom 25s infinite; }
+        @keyframes zoom { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
 
-/* IMPORTANT FIX */
-.hero-img {
-object-fit: cover;
-object-position: center 20%; /* 👈 FACE VISIBLE */
-}
+        .hero-img {
+            object-fit: cover;
+            object-position: center 20%; 
+        }
 
-/* GRID */
-#video-grid { display:grid; grid-template-columns:1fr; gap:20px; }
-@media(min-width:768px){#video-grid{grid-template-columns:repeat(3,1fr)}}
+        /* GRID */
+        #video-grid { display:grid; grid-template-cols:1fr; gap:20px; min-height: 400px; }
+        @media(min-width:768px){#video-grid{grid-template-cols:repeat(3,1fr)}}
 
-.img-card{aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#111;}
+        .img-card { aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#111; position: relative; }
+        .img-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .img-card:hover img { transform: scale(1.1); }
 
-/* SHARE BUTTONS FIX */
-.share-btn {
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:6px;
-padding:12px;
-border-radius:12px;
-font-size:11px;
-font-weight:600;
-background:#111;
-transition:0.3s;
-color:white;
-}
-.share-btn:hover { background:#a855f7; }
+        /* SHARE BUTTONS */
+        .share-btn {
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:6px;
+            padding:12px;
+            border-radius:12px;
+            font-size:11px;
+            font-weight:600;
+            background:#111;
+            transition:0.3s;
+            color:white;
+            border: none;
+            cursor: pointer;
+        }
+        .share-btn:hover { background:#a855f7; }
+        .share-btn i { width:22px; height:22px; stroke:white; }
 
-/* ICON VISIBILITY FIX */
-.share-btn i {
-width:22px;
-height:22px;
-stroke:white;
-}
-</style>
+        /* MODAL */
+        #image-modal { transition: 0.3s opacity; }
+        #image-modal.hidden { display: none; }
+    </style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<nav class="fixed top-0 w-full z-50 py-3">
-<div class="flex justify-center gap-3">
-<a href="#about" class="nav-link">About</a>
-<a href="#performances" class="nav-link">Reels</a>
-<a href="#persona-gallery" class="nav-link">Persona</a>
-<a href="#public-gallery" class="nav-link">Gallery</a>
-<a href="#contact" class="nav-link">Contact</a>
-</div>
-</nav>
+    <nav class="fixed top-0 w-full z-50 py-3">
+        <div class="flex justify-center gap-2 md:gap-3">
+            <a href="#about" class="nav-link">About</a>
+            <a href="#performances" class="nav-link">Reels</a>
+            <a href="#persona-gallery" class="nav-link">Persona</a>
+            <a href="#public-gallery" class="nav-link">Gallery</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
 
-<div class="h-20"></div>
+    <div class="h-20"></div>
 
-<!-- HERO (FIXED IMAGE POSITION) -->
-<section class="relative h-[70vh] flex items-center justify-center">
-<img src="images/background.png"
-     class="absolute w-full h-full opacity-40 bg-animate hero-img">
+    <section class="relative h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+        <img src="images/background.png" class="absolute w-full h-full opacity-40 bg-animate hero-img">
+        <div class="text-center z-10 px-4">
+            <h1 class="text-4xl md:text-7xl font-bold tracking-tighter">GOURI SHANKAR DAS</h1>
+            <p class="text-purple-400 mt-2 tracking-[0.3em] uppercase text-sm">Hypno-Mentalist • Illusionist</p>
+        </div>
+    </section>
 
-<div class="text-center z-10">
-<h1 class="text-4xl md:text-7xl font-bold">GOURI SHANKAR DAS</h1>
-<p class="text-purple-400 mt-2">Hypno-Mentalist • Illusionist</p>
-</div>
-</section>
+    <section id="about" class="py-16 px-4 max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-10 items-center">
+            <img src="images/profile.png" class="w-56 rounded-2xl shadow-2xl border border-white/10">
+            <div>
+                <h2 class="text-2xl font-bold mb-4 text-white uppercase tracking-wider">The Mind Behind The Magic</h2>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Gouri Shankar Das is a professional <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of stage experience.
+                </p>
+                <p class="text-gray-400 leading-relaxed">
+                    His work blends hypnosis and suggestion to deliver unforgettable experiences where the impossible feels real.
+                </p>
+            </div>
+        </div>
+    </section>
 
-<!-- ABOUT (IMPROVED) -->
-<section id="about" class="py-16 px-4 max-w-5xl mx-auto">
-<div class="flex flex-col md:flex-row gap-10 items-center">
+    <section id="performances" class="py-16 px-4 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-bold mb-10 uppercase tracking-widest">Performance Reels</h2>
+        <div id="video-grid">
+            <p class="text-center text-gray-500 col-span-full">Loading psychological wonders...</p>
+        </div>
+    </section>
 
-<img src="images/profile.png" class="w-56 rounded-2xl shadow-lg">
+    <section id="persona-gallery" class="py-16 px-4 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-bold mb-10 uppercase tracking-widest">Persona</h2>
+        <div id="persona-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </section>
 
-<div>
-<h2 class="text-2xl font-bold mb-4 text-white">The Mind Behind The Magic</h2>
+    <section id="public-gallery" class="py-16 px-4 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-bold mb-10 uppercase tracking-widest">Gallery</h2>
+        <div id="public-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </section>
 
-<p class="text-gray-300 leading-relaxed mb-4">
-Gouri Shankar Das is a professional <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of stage experience, known for creating powerful, reality-bending performances.
-</p>
+    <footer id="contact" class="py-20 text-center bg-black/40 border-t border-white/5">
+        <h3 class="text-gray-500 uppercase tracking-widest text-xs mb-4">Contact & Bookings</h3>
+        <p class="text-purple-400 text-2xl font-bold">+91 80119-39996</p>
+        <p class="text-purple-400 mb-10">mentalistshankar22@gmail.com</p>
 
-<p class="text-gray-400 leading-relaxed">
-His work blends hypnosis, suggestion, and psychological illusion to deliver unforgettable audience experiences. From live shows to private events, he transforms the stage into a space where the impossible feels real.
-</p>
-</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto px-4">
+            <button onclick="share('whatsapp')" class="share-btn"><i data-lucide="message-circle"></i>WhatsApp</button>
+            <button onclick="share('facebook')" class="share-btn"><i data-lucide="facebook"></i>Facebook</button>
+            <button onclick="share('twitter')" class="share-btn"><i data-lucide="twitter"></i>Twitter</button>
+            <a href="https://www.instagram.com/mentalist_g.shankar" target="_blank" class="share-btn"><i data-lucide="instagram"></i>Instagram</a>
+        </div>
+    </footer>
 
-</div>
-</section>
+    <div id="image-modal" class="hidden fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4" onclick="this.classList.add('hidden')">
+        <button class="absolute top-5 right-5 text-white text-4xl">&times;</button>
+        <img id="modal-img" src="" class="max-h-[90vh] max-w-full rounded-lg shadow-2xl">
+    </div>
 
-<!-- REELS -->
-<section id="performances" class="py-16 px-4 max-w-6xl mx-auto">
-<h2 class="text-center text-3xl mb-10">Performance Reels</h2>
+    <script src="script.js"></script>
+    <script async defer src="https://www.instagram.com/embed.js"></script>
 
-<div id="video-grid">
-<p class="text-center text-gray-500">Loading reels...</p>
-</div>
-</section>
-
-<!-- PERSONA -->
-<section id="persona-gallery" class="py-16 px-4 max-w-6xl mx-auto">
-<h2 class="text-center text-3xl mb-10">Persona</h2>
-<div id="persona-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-</section>
-
-<!-- PUBLIC -->
-<section id="public-gallery" class="py-16 px-4 max-w-6xl mx-auto">
-<h2 class="text-center text-3xl mb-10">Gallery</h2>
-<div id="public-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-</section>
-
-<!-- CONTACT -->
-<footer id="contact" class="py-20 text-center">
-<h3 class="text-xl mb-4">Contact</h3>
-
-<p class="text-purple-400 text-xl">+91 80119-39996</p>
-<p class="text-purple-400 mb-8">mentalistshankar22@gmail.com</p>
-
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto">
-
-<button onclick="share('whatsapp')" class="share-btn">
-<i data-lucide="message-circle"></i>
-WhatsApp
-</button>
-
-<button onclick="share('facebook')" class="share-btn">
-<i data-lucide="facebook"></i>
-Facebook
-</button>
-
-<button onclick="share('twitter')" class="share-btn">
-<i data-lucide="twitter"></i>
-Twitter
-</button>
-
-<a href="https://www.instagram.com/mentalist_g.shankar" target="_blank" class="share-btn">
-<i data-lucide="instagram"></i>
-Instagram
-</a>
-
-</div>
-</footer>
-
-<!-- MODAL -->
-<div id="image-modal" class="hidden fixed inset-0 bg-black flex items-center justify-center">
-<img id="modal-img" class="max-h-[90vh]">
-</div>
-
-<!-- SCRIPTS -->
-<script src="script.js"></script>
-
-<!-- Instagram -->
-<script async defer src="https://www.instagram.com/embed.js"></script>
-
-<script>
-function share(p){
-const url=location.href;
-if(p==='whatsapp') window.open(`https://wa.me/?text=${url}`);
-if(p==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
-if(p==='twitter') window.open(`https://twitter.com/intent/tweet?url=${url}`);
-}
-
-// FIX ICONS
-document.addEventListener("DOMContentLoaded", () => {
-if (window.lucide) lucide.createIcons();
-});
-</script>
-
+    <script>
+        function share(p){
+            const url = window.location.href;
+            if(p==='whatsapp') window.open(`https://wa.me/?text=${encodeURIComponent(url)}`);
+            if(p==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+            if(p==='twitter') window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`);
+        }
+    </script>
 </body>
 </html>
