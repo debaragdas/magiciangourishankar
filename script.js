@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. INITIALIZE ICONS
-    lucide.createIcons();
+    if (window.lucide) {
+        lucide.createIcons();
+    }
 
     // 2. SCROLL ANIMATION LOGIC
     const observer = new IntersectionObserver((entries) => {
@@ -14,9 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
     // 3. LOAD IMAGE GALLERIES
+    // Ensure the filename here matches your gallery JSON file exactly
     fetch('gallery-data.json')
         .then(res => {
-            if (!res.ok) throw new Error('Gallery JSON not found');
+            if (!res.ok) throw new Error('gallery-data.json not found');
             return res.json();
         })
         .then(data => {
@@ -48,9 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error("Gallery Error:", err));
 
     // 4. LOAD INSTAGRAM REELS
-    fetch('video-data.json')
+    // IMPORTANT: I changed this to match the filename you uploaded
+    fetch('videos-data (1).json') 
         .then(res => {
-            if (!res.ok) throw new Error('Video JSON not found');
+            if (!res.ok) throw new Error('videos-data (1).json not found');
             return res.json();
         })
         .then(data => {
@@ -76,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(err => console.error("Video Error:", err));
 
-    // 5. MODAL LOGIC (Global scope not needed if assigned inside)
+    // 5. MODAL LOGIC
     window.openModal = function(src) {
         const modal = document.getElementById('image-modal');
         const modalImg = document.getElementById('modal-img');
@@ -97,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 6. INSTAGRAM PROCESSOR (Outside to ensure global access if needed)
 function refreshInstagram() {
     const checkInterval = setInterval(() => {
         if (window.instgrm && window.instgrm.Embeds) {
