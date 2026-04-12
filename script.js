@@ -1,60 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
-    lucide.createIcons();
+// Intersection Observer for Scroll Animations
+const observerOptions = { threshold: 0.1 };
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+        }
+    });
+}, observerOptions);
 
-    // Scroll Observer
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('is-visible');
-        });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-    // Load Data
-    async function init() {
-        try {
-            // Instagram Reels
-            const vRes = await fetch('videos-data.json');
-            const vData = await vRes.json();
-            const vGrid = document.getElementById('video-grid');
-            vGrid.innerHTML = vData.instagramReels.map(reel => `
-                <div class="glass-card rounded-2xl overflow-hidden p-2">
-                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reels/${reel.shortcode}/" data-instgrm-version="14"></blockquote>
+// Load Gallery Data
+fetch('gallery-data.json')
+    .then(response => response.json())
+    .then(data => {
+        const personaGrid = document.getElementById('persona-grid');
+        const publicGrid = document.getElementById('public-grid');
+
+        const createItem = (photo) => {
+            const container = document.createElement('div');
+            container.className = "group relative overflow-hidden rounded-lg cursor-pointer aspect-[3/4] bg-gray-900";
+            container.innerHTML = `
+                <img src="${photo.filename}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                    <p class="text-[9px] text-purple-400 tracking-widest uppercase font-bold">${photo.caption}</p>
                 </div>
-            `).join('');
-            if (window.instgrm) window.instgrm.Embeds.process();
+            `;
+            container.onclick = () => openModal(photo.filename);
+            return container;
+        };
 
-            // Photo Gallery
-            const gRes = await fetch('gallery-data.json');
-            const gData = await gRes.json();
-            const gGrid = document.getElementById('gallery-grid');
-            gGrid.innerHTML = gData.images.map(img => `
-                <div class="aspect-square overflow-hidden rounded-xl glass-card cursor-pointer" onclick="openImg('${img.filename}')">
-                    <img src="${img.filename}" class="w-full h-full object-cover hover:scale-110 transition-all duration-500">
-                </div>
-            `).join('');
-        } catch (e) { console.error("Error loading data", e); }
-    }
+        // Populate Persona (7 images)
+        data.persona.forEach(photo => personaGrid.appendChild(createItem(photo)));
 
-    // Modal Logic
+        // Populate Public Appearance (18 images)
+        data.public.forEach(photo => publicGrid.appendChild(createItem(photo)));
+    })
+    .catch(err => console.error("Gallery failed to load:", err));
+
+// Modal Controls
+function openModal(src) {
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
-    
-    window.openImg = (src) => {
-        modalImg.src = src;
-        modal.classList.remove('hidden');
-        modal.classList.add('active');
-    };
-
-    document.getElementById('close-modal').onclick = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('active');
-    };
-
-    init();
-});
-
-function shareSite() {
-    if (navigator.share) {
-        navigator.share({ title: 'Gauri Shankar Das', url: window.location.href });
-    }
+    modalImg.src = src;
+    modal.classList.remove('hidden');
+    setTimeout(() => modal.classList.add('active'), 10);
 }
+
+document.getElementById('close-modal').onclick = () => {
+    const modal = document.getElementById('image-modal');
+    modal.classList.remove('active');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+};
