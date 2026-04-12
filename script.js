@@ -1,29 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. INITIALIZE ICONS
-    if (window.lucide) {
-        lucide.createIcons();
-    }
 
-    // 2. LOAD IMAGE GALLERIES
+    // =========================
+    // 1. INIT ICONS
+    // =========================
+    if (window.lucide) lucide.createIcons();
+
+
+    // =========================
+    // 2. LOAD GALLERY
+    // =========================
     fetch('gallery-data.json')
         .then(res => {
             if (!res.ok) throw new Error('Gallery JSON not found');
             return res.json();
         })
         .then(data => {
+
             const personaGrid = document.getElementById('persona-grid');
             const publicGrid = document.getElementById('public-grid');
-            
+
             const createCard = (photo) => {
                 const div = document.createElement('div');
                 div.className = "img-card cursor-pointer group";
+
                 div.innerHTML = `
                     <img src="${photo.filename}" 
-                         loading="lazy" 
-                         alt="${photo.caption}"
-                         class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
+                         loading="lazy"
+                         alt="${photo.caption || 'gallery image'}"
+                         class="w-full h-full object-cover"
                          onerror="this.src='https://via.placeholder.com/400x600?text=Image+Missing'">
                 `;
+
                 div.onclick = () => openModal(photo.filename);
                 return div;
             };
@@ -32,79 +39,115 @@ document.addEventListener('DOMContentLoaded', () => {
                 personaGrid.innerHTML = '';
                 data.persona.forEach(p => personaGrid.appendChild(createCard(p)));
             }
-            
+
             if (data.public && publicGrid) {
                 publicGrid.innerHTML = '';
                 data.public.forEach(p => publicGrid.appendChild(createCard(p)));
             }
-        })
-        .catch(err => console.error("Gallery Load Error:", err));
 
+        })
+        .catch(err => console.warn("Gallery Error:", err));
+
+
+    // =========================
     // 3. LOAD INSTAGRAM REELS
+    // =========================
     const videoGrid = document.getElementById('video-grid');
-    
+
     fetch('video-data.json')
         .then(res => {
-            if (!res.ok) throw new Error('video-data.json not found');
+            if (!res.ok) throw new Error('Video JSON not found');
             return res.json();
         })
         .then(data => {
+
             if (!videoGrid) return;
-            videoGrid.innerHTML = ''; 
+
+            videoGrid.innerHTML = '';
 
             data.reels.forEach(reel => {
+
                 const div = document.createElement('div');
-                // Styling for professional grid item
-                div.className = "flex justify-center min-h-[450px] w-full bg-white/5 rounded-2xl overflow-hidden border border-white/5"; 
+                div.className = "card flex justify-center items-center min-h-[450px]";
+
                 div.innerHTML = `
-                    <blockquote class="instagram-media" 
-                                data-instgrm-permalink="${reel.url}" 
-                                data-instgrm-version="14" 
-                                style="width:100%; border:0; margin:0; padding:0;">
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="${reel.url}"
+                        data-instgrm-version="14"
+                        style="width:100%; margin:0;">
                     </blockquote>
                 `;
+
                 videoGrid.appendChild(div);
             });
 
-            // Start the Instagram engine to process the new blocks
-            processInstagram();
+            // PROCESS INSTAGRAM
+            runInstagramEmbed();
+
         })
         .catch(err => {
-            console.error("Video Load Error:", err);
-            if (videoGrid) videoGrid.innerHTML = `<p class="text-gray-500 text-center col-span-full py-10">Reels are being synchronized...</p>`;
+            console.warn("Reels Error:", err);
+            if (videoGrid) {
+                videoGrid.innerHTML = `
+                    <p class="text-gray-500 text-center col-span-full py-10">
+                        Reels are loading...
+                    </p>`;
+            }
         });
 
-    // 4. MODAL LOGIC
+
+    // =========================
+    // 4. MODAL SYSTEM
+    // =========================
     window.openModal = function(src) {
-        const modal = document.getElementById('image-modal');
-        const modalImg = document.getElementById('modal-img');
-        if (modal && modalImg) {
-            modalImg.src = src;
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+        const modal = document.getElementById('modal');
+        const img = document.getElementById('modalImg');
+
+        if (modal && img) {
+            img.src = src;
+            modal.style.display = "flex";
         }
     };
 
-    // Close modal on background click
-    document.getElementById('image-modal')?.addEventListener('click', function() {
-        this.classList.add('hidden');
-        this.classList.remove('flex');
+    document.getElementById('modal')?.addEventListener('click', function () {
+        this.style.display = "none";
     });
+
 });
 
-/**
- * Robust Instagram Embed Processor
- * Ensures the Instagram engine runs after elements are injected into the DOM.
- * Includes a retry loop for better performance on mobile devices.
- */
-function processInstagram() {
+
+// =========================
+// 🔥 INSTAGRAM EMBED ENGINE
+// =========================
+function runInstagramEmbed() {
+
     let attempts = 0;
+
     const interval = setInterval(() => {
+
         if (window.instgrm && window.instgrm.Embeds) {
             window.instgrm.Embeds.process();
             clearInterval(interval);
         }
+
         attempts++;
-        if (attempts > 30) clearInterval(interval); // Timeout after 15 seconds
+        if (attempts > 30) clearInterval(interval);
+
     }, 500);
 }
+
+
+// =========================
+// 💎 SCROLL ANIMATION (SAFE)
+// =========================
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+});
