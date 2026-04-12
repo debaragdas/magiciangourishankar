@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="${photo.filename}" 
                          loading="lazy" 
                          alt="${photo.caption}"
-                         class="w-full h-full object-cover"
+                         class="w-full h-full object-cover transition duration-500 group-hover:scale-110"
                          onerror="this.src='https://via.placeholder.com/400x600?text=Image+Missing'">
                 `;
                 div.onclick = () => openModal(photo.filename);
@@ -38,23 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.public.forEach(p => publicGrid.appendChild(createCard(p)));
             }
         })
-        .catch(err => console.error("Gallery Error:", err));
+        .catch(err => console.error("Gallery Load Error:", err));
 
     // 3. LOAD INSTAGRAM REELS
     const videoGrid = document.getElementById('video-grid');
     
-    // Check for both possible filenames
-    const videoSource = 'videos-data (1).json'; 
-
-    fetch(videoSource)
-        .then(res => res.json())
+    fetch('video-data.json')
+        .then(res => {
+            if (!res.ok) throw new Error('video-data.json not found');
+            return res.json();
+        })
         .then(data => {
             if (!videoGrid) return;
             videoGrid.innerHTML = ''; 
 
             data.reels.forEach(reel => {
                 const div = document.createElement('div');
-                div.className = "flex justify-center min-h-[480px] w-full bg-white/5 rounded-2xl overflow-hidden border border-white/5"; 
+                // Styling for professional grid item
+                div.className = "flex justify-center min-h-[450px] w-full bg-white/5 rounded-2xl overflow-hidden border border-white/5"; 
                 div.innerHTML = `
                     <blockquote class="instagram-media" 
                                 data-instgrm-permalink="${reel.url}" 
@@ -65,12 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoGrid.appendChild(div);
             });
 
-            // Trigger the Instagram engine
+            // Start the Instagram engine to process the new blocks
             processInstagram();
         })
         .catch(err => {
             console.error("Video Load Error:", err);
-            if(videoGrid) videoGrid.innerHTML = `<p class="text-gray-500 text-center col-span-full">Unable to load reels. Please refresh.</p>`;
+            if (videoGrid) videoGrid.innerHTML = `<p class="text-gray-500 text-center col-span-full py-10">Reels are being synchronized...</p>`;
         });
 
     // 4. MODAL LOGIC
@@ -80,18 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modal && modalImg) {
             modalImg.src = src;
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
     };
 
-    // Close modal on click anywhere
+    // Close modal on background click
     document.getElementById('image-modal')?.addEventListener('click', function() {
         this.classList.add('hidden');
+        this.classList.remove('flex');
     });
 });
 
 /**
  * Robust Instagram Embed Processor
- * Retries for 10 seconds until the Instagram script is ready
+ * Ensures the Instagram engine runs after elements are injected into the DOM.
+ * Includes a retry loop for better performance on mobile devices.
  */
 function processInstagram() {
     let attempts = 0;
@@ -101,6 +105,6 @@ function processInstagram() {
             clearInterval(interval);
         }
         attempts++;
-        if (attempts > 20) clearInterval(interval); 
+        if (attempts > 30) clearInterval(interval); // Timeout after 15 seconds
     }, 500);
 }
