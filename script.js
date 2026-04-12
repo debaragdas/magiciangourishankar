@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
     // 3. LOAD IMAGE GALLERIES
-    // Ensure the filename here matches your gallery JSON file exactly
     fetch('gallery-data.json')
         .then(res => {
             if (!res.ok) throw new Error('gallery-data.json not found');
@@ -48,10 +47,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 data.public.forEach(p => publicGrid.appendChild(createCard(p)));
             }
         })
-        .catch(err => console.error("Gallery Error:", err));
+        .catch(err => console.error("Gallery Load Error:", err));
 
     // 4. LOAD INSTAGRAM REELS
-    // IMPORTANT: I changed this to match the filename you uploaded
+    // Note: Matches your specific uploaded filename
     fetch('videos-data (1).json') 
         .then(res => {
             if (!res.ok) throw new Error('videos-data (1).json not found');
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             refreshInstagram();
         })
-        .catch(err => console.error("Video Error:", err));
+        .catch(err => console.error("Video Load Error:", err));
 
     // 5. MODAL LOGIC
     window.openModal = function(src) {
@@ -101,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Ensures Instagram widgets render properly
 function refreshInstagram() {
     const checkInterval = setInterval(() => {
         if (window.instgrm && window.instgrm.Embeds) {
