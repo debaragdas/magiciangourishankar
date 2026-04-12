@@ -5,9 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GOURI SHANKAR DAS | Hypno-Mentalist</title>
 
+<!-- Tailwind -->
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Icons -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -27,6 +31,21 @@ nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
 @media(min-width:768px){#video-grid{grid-template-columns:repeat(3,1fr)}}
 
 .img-card{aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#111;}
+
+/* SHARE BUTTONS */
+.share-btn {
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:6px;
+padding:12px;
+border-radius:12px;
+font-size:11px;
+font-weight:600;
+background:#111;
+transition:0.3s;
+}
+.share-btn:hover { background:#a855f7; }
 </style>
 </head>
 
@@ -54,20 +73,34 @@ nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
 </div>
 </section>
 
-<!-- ABOUT -->
+<!-- ABOUT (IMPROVED) -->
 <section id="about" class="py-16 px-4 max-w-5xl mx-auto">
 <div class="flex flex-col md:flex-row gap-10 items-center">
-<img src="images/profile.png" class="w-56 rounded-2xl">
-<p class="text-gray-300">
-Gouri Shankar Das is a professional Hypno-Mentalist with 12+ years experience creating mind-blowing performances using psychology and illusion.
+
+<img src="images/profile.png" class="w-56 rounded-2xl shadow-lg">
+
+<div>
+<h2 class="text-2xl font-bold mb-4 text-white">The Mind Behind The Magic</h2>
+
+<p class="text-gray-300 leading-relaxed mb-4">
+Gouri Shankar Das is a highly experienced <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of professional stage experience. His performances blend the art of hypnosis, psychology, and illusion to create moments that challenge reality itself.
 </p>
+
+<p class="text-gray-400 leading-relaxed">
+He specializes in mind-reading demonstrations, audience interaction, and subconscious influence techniques that leave viewers amazed, engaged, and questioning what is truly possible. From live stage shows to private events, his work delivers a unique psychological experience beyond traditional magic.
+</p>
+</div>
+
 </div>
 </section>
 
 <!-- REELS -->
 <section id="performances" class="py-16 px-4 max-w-6xl mx-auto">
 <h2 class="text-center text-3xl mb-10">Performance Reels</h2>
-<div id="video-grid">Loading reels...</div>
+
+<div id="video-grid">
+<p class="text-center text-gray-500">Loading reels...</p>
+</div>
 </section>
 
 <!-- PERSONA -->
@@ -84,14 +117,34 @@ Gouri Shankar Das is a professional Hypno-Mentalist with 12+ years experience cr
 
 <!-- CONTACT -->
 <footer id="contact" class="py-20 text-center">
-<h3>Contact</h3>
-<p class="text-purple-400 text-xl">+91 80119-39996</p>
-<p class="text-purple-400">mentalistshankar22@gmail.com</p>
+<h3 class="text-xl mb-4">Contact</h3>
 
-<div class="flex justify-center gap-4 mt-6">
-<button onclick="share('whatsapp')">WhatsApp</button>
-<button onclick="share('facebook')">Facebook</button>
-<button onclick="share('twitter')">Twitter</button>
+<p class="text-purple-400 text-xl">+91 80119-39996</p>
+<p class="text-purple-400 mb-8">mentalistshankar22@gmail.com</p>
+
+<!-- SHARE BUTTONS WITH ICONS -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto">
+
+<button onclick="share('whatsapp')" class="share-btn">
+<i data-lucide="message-circle"></i>
+WhatsApp
+</button>
+
+<button onclick="share('facebook')" class="share-btn">
+<i data-lucide="facebook"></i>
+Facebook
+</button>
+
+<button onclick="share('twitter')" class="share-btn">
+<i data-lucide="twitter"></i>
+Twitter
+</button>
+
+<a href="https://www.instagram.com/mentalist_g.shankar" target="_blank" class="share-btn">
+<i data-lucide="instagram"></i>
+Instagram
+</a>
+
 </div>
 </footer>
 
@@ -100,8 +153,10 @@ Gouri Shankar Das is a professional Hypno-Mentalist with 12+ years experience cr
 <img id="modal-img" class="max-h-[90vh]">
 </div>
 
+<!-- SCRIPTS -->
 <script src="script.js"></script>
-<script async src="https://www.instagram.com/embed.js"></script>
+
+<script async defer src="https://www.instagram.com/embed.js"></script>
 
 <script>
 function share(p){
@@ -110,6 +165,11 @@ if(p==='whatsapp') window.open(`https://wa.me/?text=${url}`);
 if(p==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
 if(p==='twitter') window.open(`https://twitter.com/intent/tweet?url=${url}`);
 }
+
+// 🔥 REQUIRED FOR ICONS
+document.addEventListener("DOMContentLoaded", () => {
+if (window.lucide) lucide.createIcons();
+});
 </script>
 
 </body>
