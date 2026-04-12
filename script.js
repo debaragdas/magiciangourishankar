@@ -1,3 +1,4 @@
+// Intersection Observer for Animations
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('is-visible');
@@ -6,7 +7,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-// 1. Fetch Images
+// 1. Fetch Images (Persona & Public)
 fetch('gallery-data.json')
     .then(res => res.json())
     .then(data => {
@@ -25,33 +26,40 @@ fetch('gallery-data.json')
             return div;
         };
 
-        data.persona.forEach(p => personaGrid.appendChild(createCard(p)));
-        data.public.forEach(p => publicGrid.appendChild(createCard(p)));
-    });
+        if (data.persona) data.persona.forEach(p => personaGrid.appendChild(createCard(p)));
+        if (data.public) data.public.forEach(p => publicGrid.appendChild(createCard(p)));
+    })
+    .catch(err => console.error("Error loading images:", err));
 
-// 2. Fetch Reels with explicit Reload command
+// 2. Fetch Reels and Force Instagram Embed
 fetch('video-data.json')
     .then(res => res.json())
     .then(data => {
         const videoGrid = document.getElementById('video-grid');
-        videoGrid.innerHTML = ''; // Clear loading message
+        videoGrid.innerHTML = ''; 
 
         data.reels.forEach(reel => {
             const div = document.createElement('div');
-            div.className = "flex justify-center min-h-[400px]"; 
-            div.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${reel.url}" data-instgrm-version="14" style="width:95%; border-radius:12px; background:#000; margin:0 auto;"></blockquote>`;
+            div.className = "flex justify-center min-h-[450px] w-full"; 
+            div.innerHTML = `<blockquote class="instagram-media" data-instgrm-permalink="${reel.url}" data-instgrm-version="14" style="width:100%; border-radius:12px; background:#000; border:0; margin:0;"></blockquote>`;
             videoGrid.appendChild(div);
         });
 
-        // THIS IS THE FIX: Tell Instagram to find the new blockquotes and turn them into videos
-        if (window.instgrm) {
-            window.instgrm.Embeds.process();
-        }
-    });
+        // Loop to wait for Instagram SDK to be ready before calling process
+        const checkInstgrm = setInterval(() => {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+                clearInterval(checkInstgrm);
+            }
+        }, 500);
+    })
+    .catch(err => console.error("Error loading reels:", err));
 
+// Modal Close
 document.getElementById('close-modal').onclick = () => {
     document.getElementById('image-modal').classList.remove('active');
     setTimeout(() => document.getElementById('image-modal').classList.add('hidden'), 300);
 };
 
+// Initialize Lucide Icons
 lucide.createIcons();
