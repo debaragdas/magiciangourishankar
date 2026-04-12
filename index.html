@@ -22,7 +22,6 @@
         @keyframes slowZoom { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
         .bg-zoom { animation: slowZoom 20s infinite ease-in-out; }
 
-        /* Modal Styles */
         #image-modal.active { display: flex; opacity: 1; pointer-events: auto; }
     </style>
 </head>
@@ -30,7 +29,7 @@
 
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="background.jpg" alt="Background" class="w-full h-full object-cover opacity-40 bg-zoom">
+            <img src="images/background.png" alt="Background" class="w-full h-full object-cover opacity-40 bg-zoom">
             <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-[#08080c]"></div>
         </div>
         <div class="relative z-10 text-center px-4">
@@ -42,7 +41,7 @@
     <section class="py-24 px-4 max-w-5xl mx-auto animate-on-scroll">
         <div class="flex flex-col md:flex-row items-center gap-12">
             <div class="w-64 h-64 md:w-80 md:h-80 flex-shrink-0">
-                <img src="profile.jpg" alt="Gauri Shankar Das" class="w-full h-full object-cover rounded-2xl shadow-2xl border-2 border-purple-500/20">
+                <img src="images/profile.png" alt="Gauri Shankar Das" class="w-full h-full object-cover rounded-2xl shadow-2xl border-2 border-purple-500/20">
             </div>
             <div class="glass-card p-8 rounded-3xl text-gray-300 leading-relaxed">
                 <h2 class="text-3xl font-bold mb-6 text-white border-b-2 border-purple-500 w-fit pb-2">About The Artist</h2>
@@ -67,8 +66,8 @@
     <footer class="py-24 px-4 bg-black/60 border-t border-white/5 text-center">
         <h2 class="text-3xl font-bold mb-8 text-white">Contact & Bookings</h2>
         <div class="flex flex-col items-center gap-6 mb-12">
-            <a href="tel:+910000000000" class="text-2xl text-purple-400 font-bold tracking-widest flex items-center gap-3">
-                <i data-lucide="phone"></i> +91 00000-00000
+            <a href="tel:+918011939996" class="text-2xl text-purple-400 font-bold tracking-widest flex items-center gap-3">
+                <i data-lucide="phone"></i> +91 80119-39996
             </a>
             <div class="flex gap-6">
                 <button onclick="shareSite()" class="p-3 bg-white/5 rounded-full hover:bg-purple-600 transition-all"><i data-lucide="share-2"></i></button>
