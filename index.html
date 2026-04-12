@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOURI SHANKAR DAS | Hypno-Mentalist</title>
+    <title>GOURI SHANKAR DAS | Hypno-Mentalist & Illusionist</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -11,66 +11,90 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background:#08080c; color:#e2e8f0; margin:0; }
-        nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .nav-link { padding:10px 14px; font-size:12px; font-weight:700; text-transform:uppercase; color: white; transition: 0.3s; }
+        body { font-family: 'Inter', sans-serif; background:#08080c; color:#e2e8f0; margin:0; overflow-x: hidden; }
+        
+        /* Smooth Navigation */
+        nav { background:rgba(8,8,12,0.98); backdrop-filter:blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-link { padding:10px 14px; font-size:12px; font-weight:700; text-transform:uppercase; color: white; transition: 0.3s; text-decoration: none; }
         .nav-link:hover { color: #a855f7; }
 
-        /* Hero */
-        .bg-animate { animation: zoom 25s infinite; }
-        @keyframes zoom { 0%, 100%{transform:scale(1)} 50%{transform:scale(1.05)} }
-        .hero-img { object-fit: cover; object-position: center 20%; }
+        /* Full Background Image & Movement Fix */
+        .hero-container {
+            position: relative;
+            height: 85vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        .bg-animate { 
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Shows full image without cropping */
+            object-position: center; 
+            opacity: 0.6;
+            animation: subtleMove 20s infinite ease-in-out; 
+        }
+        @keyframes subtleMove { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.08); } 
+        }
 
-        /* Professional 3-Column Grid for Reels */
+        /* 3-Column Grid for Reels */
         #video-grid { 
             display: grid; 
             grid-template-columns: 1fr; 
-            gap: 24px; 
-            max-width: 1100px; 
+            gap: 20px; 
+            max-width: 1200px; 
             margin: 0 auto;
         }
         @media(min-width:768px){ #video-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        /* Gallery Cards */
-        .img-card { aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#111; border: 1px solid rgba(255,255,255,0.1); }
-        .img-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .img-card:hover img { transform: scale(1.05); }
-
-        /* Social Profile Buttons */
+        /* Social/Contact Buttons */
         .social-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 14px;
+            gap: 12px;
+            padding: 16px;
             border-radius: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
             color: white;
-            width: 100%;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
         .btn-wa { background: #25D366; }
         .btn-ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
         .btn-fb { background: #1877F2; }
-        .btn-mail { background: #ffffff; color: #000; }
-        .social-btn:hover { transform: translateY(-3px); opacity: 0.9; }
+        .btn-mail { background: #333; }
+        .social-btn:hover { transform: translateY(-5px); filter: brightness(1.1); }
 
-        /* Google Review Section */
+        /* Review Widget Styling */
         .review-card {
-            background: rgba(255,255,255,0.03);
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 24px;
+            padding: 40px 20px;
             text-align: center;
         }
+
+        /* Gallery */
+        .img-card { aspect-ratio:3/4; overflow:hidden; border-radius:15px; background:#111; border: 1px solid rgba(255,255,255,0.05); }
+        .img-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+        .img-card:hover img { transform: scale(1.1); }
     </style>
 </head>
 
 <body>
 
     <nav class="fixed top-0 w-full z-50 py-4">
-        <div class="flex justify-center gap-4 md:gap-8">
+        <div class="flex justify-center gap-2 md:gap-8">
             <a href="#about" class="nav-link">About</a>
             <a href="#performances" class="nav-link">Reels</a>
             <a href="#persona-gallery" class="nav-link">Persona</a>
@@ -79,109 +103,128 @@
         </div>
     </nav>
 
-    <section class="relative h-[65vh] md:h-[85vh] flex items-center justify-center overflow-hidden">
-        <img src="images/background.png" class="absolute w-full h-full opacity-40 bg-animate hero-img">
-        <div class="text-center z-10 px-4">
-            <h1 class="text-5xl md:text-8xl font-bold tracking-tighter text-white">GOURI SHANKAR DAS</h1>
-            <p class="text-purple-400 mt-4 tracking-[0.4em] uppercase text-xs md:text-lg">Hypno-Mentalist • Illusionist</p>
+    <section class="hero-container">
+        <img src="images/background.png" class="bg-animate">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-[#08080c]"></div>
+        <div class="relative z-10 text-center px-6">
+            <h1 class="text-4xl md:text-8xl font-bold tracking-tighter text-white uppercase">Gouri Shankar Das</h1>
+            <p class="text-purple-500 mt-4 tracking-[0.5em] uppercase text-xs md:text-xl font-light">Hypno-Mentalist • Illusionist</p>
         </div>
     </section>
 
-    <section id="about" class="py-20 px-4 max-w-5xl mx-auto">
-        <div class="flex flex-col md:flex-row gap-12 items-center">
-            <div class="relative">
-                <img src="images/profile.png" class="w-64 rounded-2xl shadow-2xl relative z-10 border border-white/10">
-                <div class="absolute -bottom-4 -right-4 w-64 h-64 border-2 border-purple-500/30 rounded-2xl"></div>
+    <section id="about" class="py-24 px-6 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row gap-16 items-center">
+            <div class="relative flex-shrink-0">
+                <img src="images/profile.png" class="w-64 md:w-80 rounded-3xl shadow-2xl border border-white/10 z-10 relative">
+                <div class="absolute -top-4 -left-4 w-full h-full border-2 border-purple-600/20 rounded-3xl"></div>
             </div>
-            <div>
-                <h2 class="text-3xl font-bold mb-6 text-white uppercase tracking-widest">The Mind Behind The Magic</h2>
-                <p class="text-gray-300 text-lg leading-relaxed mb-6">
-                    Gouri Shankar Das is a professional <strong>Hypno-Mentalist</strong> with over 12 years of expertise in psychological wonder.
+            <div class="space-y-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-white uppercase tracking-wider">Master of the Subconscious</h2>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    With over <strong>12 years of professional experience</strong>, Gouri Shankar Das has mastered the delicate art of Hypno-Mentalism. His performances are not just shows; they are immersive psychological journeys that challenge the boundaries of reality and the human mind.
                 </p>
-                <div class="flex gap-4">
-                    <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10 w-32">
-                        <span class="block text-2xl font-bold text-purple-400">12+</span>
-                        <span class="text-[10px] uppercase text-gray-500">Years Exp.</span>
-                    </div>
-                    <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10 w-32">
-                        <span class="block text-2xl font-bold text-purple-400">1000+</span>
-                        <span class="text-[10px] uppercase text-gray-500">Shows</span>
-                    </div>
+                <p class="text-gray-400 text-md leading-relaxed">
+                    Specializing in suggestion, thought-influence, and high-level illusion, Gouri Shankar has performed for thousands across prestigious stages and corporate events. He bridges the gap between the conscious and subconscious, leaving every audience member questioning: <em>"Was it magic, or is the mind truly that powerful?"</em>
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <div class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-purple-400 text-sm font-bold uppercase tracking-widest">1000+ Shows</div>
+                    <div class="px-6 py-3 bg-white/5 border border-white/10 rounded-full text-purple-400 text-sm font-bold uppercase tracking-widest">Psychological Arts</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="performances" class="py-20 px-4 bg-white/[0.02]">
-        <h2 class="text-center text-3xl font-bold mb-12 uppercase tracking-widest">Performance Reels</h2>
+    <section id="performances" class="py-24 px-4 bg-white/[0.01]">
+        <h2 class="text-center text-3xl font-bold mb-16 uppercase tracking-[0.3em]">Performance Reels</h2>
         <div id="video-grid">
-            </div>
-    </section>
-
-    <section class="py-20 px-4 max-w-4xl mx-auto">
-        <div class="review-card">
-            <div class="flex justify-center mb-4">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_\"G\"_logo.svg" class="w-8 h-8 mr-3">
-                <h3 class="text-xl font-semibold">Google Reviews & Rating</h3>
-            </div>
-            <div class="flex justify-center items-center gap-2 mb-4">
-                <span class="text-5xl font-bold text-white">5.0</span>
-                <div class="flex text-yellow-400">
-                    <i data-lucide="star" fill="currentColor"></i>
-                    <i data-lucide="star" fill="currentColor"></i>
-                    <i data-lucide="star" fill="currentColor"></i>
-                    <i data-lucide="star" fill="currentColor"></i>
-                    <i data-lucide="star" fill="currentColor"></i>
-                </div>
-            </div>
-            <p class="text-gray-400 mb-8 italic">"World-class mentalism and mind-bending illusions. A must-see performer!"</p>
-            <a href="https://share.google/9cq7KQ6kqxWBdp9OB" target="_blank" class="inline-block px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-purple-500 hover:text-white transition">View All 5-Star Reviews</a>
+            <p class="text-center text-gray-600 col-span-full py-20">Aligning the frequencies...</p>
         </div>
     </section>
 
-    <section id="persona-gallery" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-center text-3xl font-bold mb-12 uppercase tracking-widest">Persona</h2>
+    <section class="py-24 px-6 max-w-4xl mx-auto">
+        <div class="review-card">
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" class="w-10 h-10">
+                <h3 class="text-2xl font-bold">Google Business Profile</h3>
+            </div>
+            <div class="flex flex-col items-center mb-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <span class="text-6xl font-black text-white">5.0</span>
+                    <div class="flex text-yellow-500">
+                        <i data-lucide="star" fill="currentColor"></i>
+                        <i data-lucide="star" fill="currentColor"></i>
+                        <i data-lucide="star" fill="currentColor"></i>
+                        <i data-lucide="star" fill="currentColor"></i>
+                        <i data-lucide="star" fill="currentColor"></i>
+                    </div>
+                </div>
+                <p class="text-gray-500 uppercase tracking-widest text-xs font-bold">Excellent Rating based on Client Reviews</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-10">
+                <div class="bg-black/40 p-6 rounded-2xl border border-white/5">
+                    <p class="text-gray-300 italic text-sm">"Absolutely mind-blowing performance! He knew exactly what I was thinking. Highly recommend for any corporate event!"</p>
+                    <span class="block mt-4 text-purple-400 font-bold text-xs">— Verified Client Review</span>
+                </div>
+                <div class="bg-black/40 p-6 rounded-2xl border border-white/5">
+                    <p class="text-gray-300 italic text-sm">"The hypnosis session was incredible. A true professional who knows his craft inside out. 5 stars!"</p>
+                    <span class="block mt-4 text-purple-400 font-bold text-xs">— Google Review</span>
+                </div>
+            </div>
+            <a href="https://share.google/9cq7KQ6kqxWBdp9OB" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 bg-white text-black font-black rounded-full hover:scale-105 transition active:scale-95">
+                WRITE A REVIEW <i data-lucide="external-link" class="w-5 h-5"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="persona-gallery" class="py-24 px-4 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-bold mb-16 uppercase tracking-[0.3em]">Persona</h2>
         <div id="persona-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
     </section>
 
-    <section id="public-gallery" class="py-20 px-4 max-w-6xl mx-auto">
-        <h2 class="text-center text-3xl font-bold mb-12 uppercase tracking-widest">Gallery</h2>
+    <section id="public-gallery" class="py-24 px-4 max-w-6xl mx-auto">
+        <h2 class="text-center text-3xl font-bold mb-16 uppercase tracking-[0.3em]">The Stage</h2>
         <div id="public-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
     </section>
 
-    <footer id="contact" class="py-24 bg-black border-t border-white/5 px-4">
+    <footer id="contact" class="py-32 bg-black border-t border-white/5 px-6">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-4 uppercase tracking-tighter">Get In Touch</h2>
-            <p class="text-gray-500 mb-12 uppercase text-xs tracking-[0.3em]">For Professional Inquiries & Bookings</p>
+            <h2 class="text-4xl font-bold mb-4 uppercase tracking-tighter">Connect With Me</h2>
+            <p class="text-gray-500 mb-12 uppercase text-xs tracking-[0.4em]">For Live Bookings & Mentalism Workshops</p>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-16 max-w-2xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 max-w-2xl mx-auto">
                 <a href="https://wa.me/918011939996" target="_blank" class="social-btn btn-wa">
-                    <i data-lucide="message-circle"></i> WhatsApp Me
+                    <i data-lucide="message-circle"></i> Direct WhatsApp
                 </a>
-                <a href="https://www.instagram.com/gshankar.magic" target="_blank" class="social-btn btn-ig">
+                <a href="https://www.instagram.com/gshankar.magic?igsh=ZDh5bjNzZ2M3Z3Fh" target="_blank" class="social-btn btn-ig">
                     <i data-lucide="instagram"></i> Instagram Profile
                 </a>
                 <a href="https://www.facebook.com/share/18MFJPQQzu/" target="_blank" class="social-btn btn-fb">
                     <i data-lucide="facebook"></i> Facebook Page
                 </a>
                 <a href="mailto:mentalistshankar22@gmail.com" class="social-btn btn-mail">
-                    <i data-lucide="mail"></i> Email Me
+                    <i data-lucide="mail"></i> Send an Email
                 </a>
             </div>
+
+            <div class="pt-10 border-t border-white/5">
+                <p class="text-gray-600 uppercase text-[10px] tracking-widest mb-6">Share This Website</p>
+                <div class="flex justify-center gap-6">
+                    <button onclick="window.open('https://api.whatsapp.com/send?text=' + encodeURIComponent(window.location.href))" class="text-gray-400 hover:text-green-500 transition"><i data-lucide="share-2"></i></button>
+                    <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link Copied!')" class="text-gray-400 hover:text-purple-500 transition"><i data-lucide="copy"></i></button>
+                </div>
+            </div>
             
-            <p class="text-purple-400 text-xl font-bold mb-2">+91 80119-39996</p>
-            <p class="text-gray-700 text-[10px] tracking-[0.5em] mt-20 uppercase">© 2026 GOURI SHANKAR DAS</p>
+            <p class="text-purple-900 text-[9px] tracking-[0.8em] mt-24 uppercase">© 2026 GOURI SHANKAR DAS</p>
         </div>
     </footer>
 
     <div id="image-modal" class="hidden fixed inset-0 z-[100] bg-black/98 flex items-center justify-center p-4" onclick="this.classList.add('hidden')">
-        <img id="modal-img" src="" class="max-h-[85vh] max-w-full rounded-lg shadow-2xl border border-white/10">
+        <img id="modal-img" src="" class="max-h-[90vh] max-w-full rounded-xl shadow-2xl border border-white/10">
     </div>
 
     <script src="script.js"></script>
     <script async defer src="https://www.instagram.com/embed.js"></script>
     <script>
-        // Initialize Icons
         document.addEventListener("DOMContentLoaded", () => {
             if (window.lucide) lucide.createIcons();
         });
