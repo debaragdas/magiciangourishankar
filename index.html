@@ -22,9 +22,15 @@ nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
 .nav-link { padding:10px 14px; font-size:12px; font-weight:700; text-transform:uppercase; }
 .nav-link:hover { background:#a855f7; border-radius:6px; }
 
-/* HERO */
+/* HERO FIXED (face visible) */
 .bg-animate { animation: zoom 25s infinite; }
 @keyframes zoom { 0%{transform:scale(1)} 50%{transform:scale(1.1)} 100%{transform:scale(1)} }
+
+/* IMPORTANT FIX */
+.hero-img {
+object-fit: cover;
+object-position: center 20%; /* 👈 FACE VISIBLE */
+}
 
 /* GRID */
 #video-grid { display:grid; grid-template-columns:1fr; gap:20px; }
@@ -32,7 +38,7 @@ nav { background:rgba(8,8,12,0.95); backdrop-filter:blur(15px); }
 
 .img-card{aspect-ratio:3/4; overflow:hidden; border-radius:12px; background:#111;}
 
-/* SHARE BUTTONS */
+/* SHARE BUTTONS FIX */
 .share-btn {
 display:flex;
 flex-direction:column;
@@ -44,8 +50,16 @@ font-size:11px;
 font-weight:600;
 background:#111;
 transition:0.3s;
+color:white;
 }
 .share-btn:hover { background:#a855f7; }
+
+/* ICON VISIBILITY FIX */
+.share-btn i {
+width:22px;
+height:22px;
+stroke:white;
+}
 </style>
 </head>
 
@@ -64,9 +78,11 @@ transition:0.3s;
 
 <div class="h-20"></div>
 
-<!-- HERO -->
+<!-- HERO (FIXED IMAGE POSITION) -->
 <section class="relative h-[70vh] flex items-center justify-center">
-<img src="images/background.png" class="absolute w-full h-full object-cover opacity-40 bg-animate">
+<img src="images/background.png"
+     class="absolute w-full h-full opacity-40 bg-animate hero-img">
+
 <div class="text-center z-10">
 <h1 class="text-4xl md:text-7xl font-bold">GOURI SHANKAR DAS</h1>
 <p class="text-purple-400 mt-2">Hypno-Mentalist • Illusionist</p>
@@ -83,11 +99,11 @@ transition:0.3s;
 <h2 class="text-2xl font-bold mb-4 text-white">The Mind Behind The Magic</h2>
 
 <p class="text-gray-300 leading-relaxed mb-4">
-Gouri Shankar Das is a highly experienced <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of professional stage experience. His performances blend the art of hypnosis, psychology, and illusion to create moments that challenge reality itself.
+Gouri Shankar Das is a professional <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of stage experience, known for creating powerful, reality-bending performances.
 </p>
 
 <p class="text-gray-400 leading-relaxed">
-He specializes in mind-reading demonstrations, audience interaction, and subconscious influence techniques that leave viewers amazed, engaged, and questioning what is truly possible. From live stage shows to private events, his work delivers a unique psychological experience beyond traditional magic.
+His work blends hypnosis, suggestion, and psychological illusion to deliver unforgettable audience experiences. From live shows to private events, he transforms the stage into a space where the impossible feels real.
 </p>
 </div>
 
@@ -122,7 +138,6 @@ He specializes in mind-reading demonstrations, audience interaction, and subcons
 <p class="text-purple-400 text-xl">+91 80119-39996</p>
 <p class="text-purple-400 mb-8">mentalistshankar22@gmail.com</p>
 
-<!-- SHARE BUTTONS WITH ICONS -->
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-md mx-auto">
 
 <button onclick="share('whatsapp')" class="share-btn">
@@ -156,6 +171,7 @@ Instagram
 <!-- SCRIPTS -->
 <script src="script.js"></script>
 
+<!-- Instagram -->
 <script async defer src="https://www.instagram.com/embed.js"></script>
 
 <script>
@@ -166,7 +182,7 @@ if(p==='facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${u
 if(p==='twitter') window.open(`https://twitter.com/intent/tweet?url=${url}`);
 }
 
-// 🔥 REQUIRED FOR ICONS
+// FIX ICONS
 document.addEventListener("DOMContentLoaded", () => {
 if (window.lucide) lucide.createIcons();
 });
