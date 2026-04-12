@@ -22,7 +22,7 @@
             overflow-x: hidden;
         }
 
-        /* Fixed Background Movement - Balanced Positioning */
+        /* Background Movement Logic */
         @keyframes slowZoom {
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
@@ -30,7 +30,7 @@
         }
         .bg-animate {
             animation: slowZoom 25s infinite ease-in-out;
-            transform-origin: center 20%; 
+            transform-origin: center 15%; 
         }
 
         .glass-card { 
@@ -49,9 +49,40 @@
             transform: translateY(0); 
         }
 
-        .social-btn {
-            @apply p-3 bg-white/5 rounded-full hover:bg-purple-600 transition-all duration-300 flex items-center justify-center;
+        /* Social Button Styling */
+        .share-grid {
+            display: grid;
+            grid-template-cols: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
         }
+        @media (min-width: 640px) {
+            .share-grid { grid-template-cols: repeat(4, 1fr); }
+        }
+
+        .btn-share {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-share i { margin-bottom: 8px; width: 24px; height: 24px; }
+        .btn-share:hover { transform: translateY(-5px); filter: brightness(1.2); }
+
+        /* Specific Brand Colors */
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-facebook { background-color: #1877F2; }
+        .bg-twitter { background-color: #1DA1F2; }
+        .bg-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 
         #image-modal.active { display: flex; }
     </style>
@@ -61,11 +92,11 @@
     <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="images/background.png" alt="Background" class="w-full h-full object-cover opacity-50 bg-animate" style="object-position: center 15%;">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/70 to-[#08080c]"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/80 to-[#08080c]"></div>
         </div>
         <div class="relative z-10 text-center px-4">
-            <h1 class="text-6xl md:text-8xl font-bold mb-4 tracking-tighter uppercase text-white drop-shadow-2xl">GAURI SHANKAR DAS</h1>
-            <p class="text-xl md:text-2xl text-purple-400 font-light tracking-[0.2em] drop-shadow-lg">HYPNO-MENTALIST • ILLUSIONIST</p>
+            <h1 class="text-6xl md:text-8xl font-bold mb-4 tracking-tighter uppercase text-white">GAURI SHANKAR DAS</h1>
+            <p class="text-xl md:text-2xl text-purple-400 font-light tracking-[0.2em]">HYPNO-MENTALIST • ILLUSIONIST</p>
         </div>
     </section>
 
@@ -77,7 +108,7 @@
             <div class="glass-card p-8 rounded-3xl text-gray-300 leading-relaxed">
                 <h2 class="text-3xl font-bold mb-6 text-white border-b-2 border-purple-500 w-fit pb-2">About The Artist</h2>
                 <p class="mb-4 text-lg">Magician G. Shankar is a seasoned <strong>Hypno-Mentalist and Psychological Illusionist</strong> with over 12 years of experience performing on stage. His work focuses on creating astonishing moments by harnessing the power of the human mind.</p>
-                <p class="text-lg text-purple-200 italic">"The mind is the ultimate stage."</p>
+                <p class="text-lg text-purple-200">The mind is the ultimate stage.</p>
             </div>
         </div>
     </section>
@@ -92,50 +123,61 @@
         <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
     </section>
 
-    <footer class="py-24 px-4 bg-black/80 border-t border-white/5 text-center">
-        <h2 class="text-3xl font-bold mb-12 text-white tracking-widest uppercase">Get In Touch</h2>
+    <footer class="py-24 px-4 bg-black/90 border-t border-white/5 text-center">
+        <h2 class="text-3xl font-bold mb-12 text-white tracking-widest uppercase">Contact & Bookings</h2>
         
-        <div class="flex flex-col items-center gap-8 mb-16">
-            <div class="space-y-4">
-                <a href="tel:+918011939996" class="text-xl md:text-2xl text-purple-400 font-bold tracking-widest flex items-center justify-center gap-3 hover:text-white transition-colors">
-                    <i data-lucide="phone" class="w-6 h-6"></i> +91 80119-39996
-                </a>
-                <a href="mailto:mentalistshankar22@gmail.com" class="text-xl md:text-2xl text-purple-400 font-bold tracking-widest flex items-center justify-center gap-3 hover:text-white transition-colors">
-                    <i data-lucide="mail" class="w-6 h-6"></i> mentalistshankar22@gmail.com
-                </a>
-            </div>
+        <div class="space-y-6 mb-16">
+            <a href="tel:+918011939996" class="text-2xl text-purple-400 font-bold tracking-widest flex items-center justify-center gap-3 hover:text-white transition-colors">
+                <i data-lucide="phone"></i> +91 80119-39996
+            </a>
+            <a href="mailto:mentalistshankar22@gmail.com" class="text-lg md:text-xl text-purple-400 font-medium flex items-center justify-center gap-3 hover:text-white transition-colors">
+                <i data-lucide="mail"></i> mentalistshankar22@gmail.com
+            </a>
+        </div>
 
-            <div class="flex flex-wrap justify-center gap-4 mt-4">
-                <button onclick="shareLink('whatsapp')" class="social-btn hover:bg-green-600" title="Share on WhatsApp"><i data-lucide="message-circle"></i></button>
-                <button onclick="shareLink('facebook')" class="social-btn hover:bg-blue-700" title="Share on Facebook"><i data-lucide="facebook"></i></button>
-                <button onclick="shareLink('twitter')" class="social-btn hover:bg-sky-500" title="Share on Twitter/X"><i data-lucide="twitter"></i></button>
-                <button onclick="navigator.share({url: window.location.href})" class="social-btn hover:bg-purple-600" title="Other Share Options"><i data-lucide="share-2"></i></button>
-            </div>
+        <h3 class="text-sm text-gray-500 mb-6 uppercase tracking-[0.2em]">Share This Website</h3>
+        
+        <div class="share-grid">
+            <button onclick="shareNow('whatsapp')" class="btn-share bg-whatsapp">
+                <i data-lucide="message-circle"></i> WhatsApp
+            </button>
+            <button onclick="shareNow('facebook')" class="btn-share bg-facebook">
+                <i data-lucide="facebook"></i> Facebook
+            </button>
+            <button onclick="shareNow('twitter')" class="btn-share bg-twitter">
+                <i data-lucide="twitter"></i> Twitter
+            </button>
+            <a href="https://www.instagram.com/mentalist_g.shankar" target="_blank" class="btn-share bg-instagram">
+                <i data-lucide="instagram"></i> Instagram
+            </a>
         </div>
         
-        <p class="text-gray-600 text-xs tracking-[0.3em] uppercase">© 2026 GAURI SHANKAR DAS | DEBAWAVES PRODUCTION</p>
+        <p class="mt-20 text-gray-700 text-[10px] tracking-[0.4em] uppercase">© 2026 GAURI SHANKAR DAS | DEBAWAVES PRODUCTION</p>
     </footer>
 
     <div id="image-modal" class="fixed inset-0 z-[100] bg-black/95 hidden items-center justify-center p-4">
         <button id="close-modal" class="absolute top-5 right-5 text-white"><i data-lucide="x" class="w-10 h-10"></i></button>
-        <img id="modal-img" src="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl">
+        <img id="modal-img" src="" class="max-w-full max-h-[85vh] rounded-lg">
     </div>
 
     <script>
-        function shareLink(platform) {
-            const url = encodeURIComponent(window.location.href);
-            const text = encodeURIComponent("Check out the official website of Gauri Shankar Das - Hypno-Mentalist!");
+        function shareNow(platform) {
+            const pageUrl = window.location.href;
+            const message = "Check out the official website of Gauri Shankar Das - Hypno-Mentalist! ";
             
-            const links = {
-                whatsapp: `https://api.whatsapp.com/send?text=${text}%20${url}`,
-                facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-                twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`
-            };
+            let shareUrl = "";
+            if (platform === 'whatsapp') {
+                shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message + pageUrl)}`;
+            } else if (platform === 'facebook') {
+                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}`;
+            } else if (platform === 'twitter') {
+                shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(pageUrl)}`;
+            }
             
-            window.open(links[platform], '_blank');
+            window.open(shareUrl, '_blank');
         }
 
-        // Initialize Lucide Icons
+        // Initialize Icons
         lucide.createIcons();
     </script>
     <script src="script.js"></script>
