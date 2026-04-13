@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // =============================================
-// NAVIGATION
+// NAVIGATION - Always Visible with Scroll Effects
 // =============================================
 
 function initNavigation() {
@@ -80,11 +80,12 @@ function initMobileMenu() {
 }
 
 // =============================================
-// INSTAGRAM REELS - Thumbnail Style with Premium Play
+// INSTAGRAM REELS - Clean Thumbnail Style with Play & Visit Options
 // =============================================
 
 async function initReels() {
     const reelsGrid = document.getElementById('reelsGrid');
+    const instagramProfileUrl = 'https://www.instagram.com/gshankar.magic';
     
     try {
         const response = await fetch('video-data.json');
@@ -92,22 +93,20 @@ async function initReels() {
         
         reelsGrid.innerHTML = data.reels.map((reel, index) => {
             return `
-                <div class="reel-card">
+                <div class="reel-item">
                     <div class="reel-thumbnail">
                         <img src="${reel.thumbnail || 'images/reel-thumbnail-' + (index + 1) + '.jpg'}" alt="Reel ${index + 1}" onerror="this.src='images/default-reel.jpg'">
-                        <div class="reel-premium-badge">
-                            <i class="fas fa-crown"></i>
-                            Premium
-                        </div>
-                        <div class="reel-overlay">
-                            <a href="${reel.url}" class="reel-play-btn" target="_blank" rel="noopener">
+                        <div class="reel-play-overlay">
+                            <a href="${reel.url}" class="reel-play-btn" target="_blank" rel="noopener" title="Play on Instagram">
                                 <i class="fas fa-play"></i>
                             </a>
                         </div>
-                        <a href="${reel.url}" class="reel-instagram-btn" target="_blank" rel="noopener">
-                            <i class="fab fa-instagram"></i>
-                            Watch on Instagram
-                        </a>
+                        <div class="reel-instagram-link">
+                            <a href="${instagramProfileUrl}" target="_blank" rel="noopener">
+                                <i class="fab fa-instagram"></i>
+                                Visit Profile
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
@@ -116,30 +115,30 @@ async function initReels() {
         console.error('Error loading reels:', error);
         // Fallback with sample reels if JSON fails
         const fallbackReels = [
-            { url: 'https://www.instagram.com/gshankar.magic' },
-            { url: 'https://www.instagram.com/gshankar.magic' },
-            { url: 'https://www.instagram.com/gshankar.magic' },
-            { url: 'https://www.instagram.com/gshankar.magic' }
+            { url: instagramProfileUrl },
+            { url: instagramProfileUrl },
+            { url: instagramProfileUrl },
+            { url: instagramProfileUrl },
+            { url: instagramProfileUrl },
+            { url: instagramProfileUrl }
         ];
         
         reelsGrid.innerHTML = fallbackReels.map((reel, index) => {
             return `
-                <div class="reel-card">
+                <div class="reel-item">
                     <div class="reel-thumbnail">
-                        <img src="images/reel-thumbnail-${index + 1}.jpg" alt="Reel ${index + 1}" onerror="this.style.display='none'">
-                        <div class="reel-premium-badge">
-                            <i class="fas fa-crown"></i>
-                            Premium
-                        </div>
-                        <div class="reel-overlay">
-                            <a href="${reel.url}" class="reel-play-btn" target="_blank" rel="noopener">
+                        <img src="images/reel-thumbnail-${index + 1}.jpg" alt="Reel ${index + 1}" onerror="this.style.background='linear-gradient(135deg, #8b5cf6, #ec4899)'">
+                        <div class="reel-play-overlay">
+                            <a href="${reel.url}" class="reel-play-btn" target="_blank" rel="noopener" title="Play on Instagram">
                                 <i class="fas fa-play"></i>
                             </a>
                         </div>
-                        <a href="${reel.url}" class="reel-instagram-btn" target="_blank" rel="noopener">
-                            <i class="fab fa-instagram"></i>
-                            Watch on Instagram
-                        </a>
+                        <div class="reel-instagram-link">
+                            <a href="${instagramProfileUrl}" target="_blank" rel="noopener">
+                                <i class="fab fa-instagram"></i>
+                                Visit Profile
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;
@@ -401,7 +400,7 @@ function initScrollAnimations() {
         });
     }, observerOptions);
     
-    document.querySelectorAll('.section-header, .about-grid, .stat-card, .reel-card, .review-card, .gallery-item, .contact-card, .social-btn').forEach(el => {
+    document.querySelectorAll('.section-header, .about-grid, .stat-card, .reel-item, .review-card, .gallery-item, .contact-card, .social-btn').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
