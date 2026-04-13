@@ -9,7 +9,6 @@
     { "filename": "images/persona-7.jpeg", "caption": "The Artist's Persona VII" },
     { "filename": "images/persona-8.jpeg", "caption": "The Artist's Persona VIII" }
   ],
-
   "public": [
     { "filename": "images/stage-1.jpeg", "caption": "Public Appearance I" },
     { "filename": "images/stage-2.jpeg", "caption": "Public Appearance II" },
