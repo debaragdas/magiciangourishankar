@@ -286,7 +286,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 40%;
+            object-position: center 25%;
             animation: slowZoom 15s ease-in-out infinite alternate;
         }
 
@@ -755,83 +755,64 @@
             width: 100%;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--surface-light), var(--surface));
+            background: linear-gradient(135deg, var(--surface), var(--surface-light));
+            border-radius: 12px;
         }
 
-        .reel-thumbnail img,
-        .reel-thumbnail video {
+        /* Instagram Embed iframe */
+        .reel-thumbnail iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 12px;
         }
 
-        .reel-item:hover .reel-thumbnail img,
-        .reel-item:hover .reel-thumbnail video {
-            transform: scale(1.05);
-        }
-
-        /* Play Button Overlay - only shows when video paused */
-        .reel-play-overlay {
+        /* Loading state while iframe loads */
+        .reel-loading {
             position: absolute;
             inset: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: rgba(0, 0, 0, 0.3);
-            opacity: 1;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            gap: 1rem;
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary), var(--accent));
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            z-index: 1;
         }
 
-        .reel-play-overlay.playing {
-            opacity: 0;
-            pointer-events: none;
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        .reel-item:hover .reel-play-overlay:not(.playing) {
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        .reel-play-btn {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .reel-loading i {
+            font-size: 2.5rem;
             color: white;
-            font-size: 1.75rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 40px var(--glow);
+            animation: pulse 1.5s ease-in-out infinite;
         }
 
-        .reel-play-btn:hover {
-            transform: scale(1.15);
-            box-shadow: 0 15px 50px var(--glow), 0 0 40px var(--glow-pink);
+        .reel-loading span {
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
         }
 
-        .reel-play-btn i {
-            margin-left: 5px;
+        /* Hide loading when iframe is loaded */
+        .reel-thumbnail.loaded .reel-loading {
+            display: none;
         }
 
-        /* Instagram Visit Button */
-        .reel-instagram-link {
+        /* Instagram Visit Profile Button */
+        .reel-visit-btn {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 0.75rem;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
-            display: flex;
-            justify-content: center;
-            z-index: 5;
-        }
-
-        .reel-instagram-link a {
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -840,14 +821,16 @@
             border-radius: 50px;
             color: white;
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
-        .reel-instagram-link a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 25px rgba(225, 48, 108, 0.5);
+        .reel-visit-btn:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 6px 25px rgba(225, 48, 108, 0.5);
         }
 
         .reels-cta {
@@ -1544,21 +1527,21 @@
 
             /* Mobile hero fixes - reduce glow, show face */
             .hero-bg img {
-                object-position: center 35%;
+                object-position: center 20%;
             }
 
             .hero-glow {
-                width: 300px;
-                height: 300px;
-                opacity: 0.15;
-                filter: blur(80px);
+                width: 250px;
+                height: 250px;
+                opacity: 0.1;
+                filter: blur(60px);
             }
 
             .hero-overlay {
                 background: linear-gradient(
                     to bottom,
-                    rgba(3, 0, 20, 0.15) 0%,
-                    rgba(3, 0, 20, 0.3) 50%,
+                    rgba(3, 0, 20, 0.1) 0%,
+                    rgba(3, 0, 20, 0.25) 50%,
                     rgba(3, 0, 20, 0.95) 100%
                 );
             }
